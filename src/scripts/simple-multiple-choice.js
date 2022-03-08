@@ -259,6 +259,18 @@ export default class SimpleMultiChoice extends H5P.EventDispatcher {
       return (this.feedbackElements.length === 0);
     };
 
+    /**
+     * Reset the content
+     */
+    this.resetTask = function () {
+      this.state.forEach((state) => {
+        state.checked = false;
+      });
+      this.listItems.forEach((list) =>
+          H5P.jQuery(list).find('.h5p-simple-multiple-choice-alternative-input').attr('checked', false)
+      );
+    };
+
     this.restorePreviousState();
   }
 }
