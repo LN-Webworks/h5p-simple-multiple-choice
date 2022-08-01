@@ -157,6 +157,7 @@ export default class SimpleMultiChoice extends H5P.EventDispatcher {
       const altList = document.createElement('ul');
       altList.classList.add('h5p-simple-multiple-choice-alternatives');
       altList.classList.add('h5p-subcontent-body');
+      altList.classList.add('review-btns');
       altList.setAttribute('role', 'listbox');
       altList.setAttribute('aria-labelledby', questionId);
 
@@ -167,6 +168,9 @@ export default class SimpleMultiChoice extends H5P.EventDispatcher {
         listItem.className = 'h5p-simple-multiple-choice-alternative-li';
         const label = document.createElement('label');
         const input = document.createElement('input');
+        const span = document.createElement('span');
+        input.setAttribute("id", "simple-multichoice-" + id);
+        label.setAttribute("for", "simple-multichoice-" + id);
         input.className = 'h5p-simple-multiple-choice-alternative-input';
 
         // Input attributes
@@ -179,7 +183,9 @@ export default class SimpleMultiChoice extends H5P.EventDispatcher {
         // Label attributes
         label.addEventListener('change', this.handleInputChange.bind(this, id));
         label.appendChild(input);
-        label.innerHTML += text;
+        label.classList.add("emotican-" + text)
+        span.innerHTML += text;
+        label.appendChild(span);
 
         listItem.appendChild(label);
         altList.appendChild(listItem);
