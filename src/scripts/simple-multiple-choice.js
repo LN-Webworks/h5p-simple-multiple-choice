@@ -147,6 +147,9 @@ export default class SimpleMultiChoice extends H5P.EventDispatcher {
      * @return {HTMLElement} html for alternatives list items
      */
     this.createAlternativesList = function (questionId) {
+      let allOptions = ['Motivated', 'Calm', 'Discouraged', 'Uneasy', 'Joyful', 'Satisfied', 'Bored', 'Stressed'];
+      let selectedOptions = this.state.map((item) => item.text);
+      const filteredArray = allOptions.filter(value => selectedOptions.includes(value));
       if (!this.state.length) {
         const err = document.createElement('div');
         err.className = 'h5p-simple-multiple-choice-alternatives-error';
@@ -158,11 +161,13 @@ export default class SimpleMultiChoice extends H5P.EventDispatcher {
       altList.classList.add('h5p-simple-multiple-choice-alternatives');
       altList.classList.add('h5p-subcontent-body');
       altList.classList.add('review-btns');
+      if(filteredArray.length > 0){
+        altList.classList.add('emoicons');
+      }
       altList.setAttribute('role', 'listbox');
       altList.setAttribute('aria-labelledby', questionId);
 
       this.state.forEach(({ id, text, checked }) => {
-
         // Elements
         const listItem = document.createElement('li');
         listItem.className = 'h5p-simple-multiple-choice-alternative-li';
@@ -183,7 +188,7 @@ export default class SimpleMultiChoice extends H5P.EventDispatcher {
         // Label attributes
         label.addEventListener('change', this.handleInputChange.bind(this, id));
         label.appendChild(input);
-        label.classList.add("emotican-" + text)
+        label.classList.add("emotican-" + text.replace(/\s/g, ""))
         span.innerHTML += text;
         label.appendChild(span);
 
